@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Coin Management Tool"
+version = "1.0.0"
+id = "artifacts/coin-management-tool"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23817
+
+[services.development]
+run = "pnpm --filter @workspace/coin-management-tool run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/coin-management-tool", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/coin-management-tool/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23817"
+BASE_PATH = "/"

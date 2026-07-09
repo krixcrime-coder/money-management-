@@ -1,44 +1,68 @@
-# [Project name]
+# Coin Management Tool
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A disciplined coin tracking web app for a coin-based game. Users start with any number of coins and follow a daily strategy to reach 10,000 coins in 30 days.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/coin-management-tool run dev` — run the frontend (port auto-assigned)
+- `pnpm --filter @workspace/coin-management-tool run typecheck` — typecheck the app
+- Required env vars (set as Replit Secrets/Env Vars):
+  - `VITE_FIREBASE_API_KEY`
+  - `VITE_FIREBASE_AUTH_DOMAIN`
+  - `VITE_FIREBASE_PROJECT_ID`
+  - `VITE_FIREBASE_STORAGE_BUCKET`
+  - `VITE_FIREBASE_MESSAGING_SENDER_ID`
+  - `VITE_FIREBASE_DATABASE_URL`
+  - `VITE_FIREBASE_APP_ID` — **needs web app ID from Firebase Console → Project Settings → Add app → Web**
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- React + Vite + TypeScript
+- Firebase Auth (authentication)
+- Firestore (database)
+- Firebase Storage (screenshot uploads)
+- Tailwind CSS + glassmorphism dark theme
+- Recharts (analytics charts)
+- Wouter (routing)
+- Sonner (toast notifications)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/coin-management-tool/src/lib/firebase.ts` — Firebase init
+- `artifacts/coin-management-tool/src/lib/strategyEngine.ts` — daily target/stop-loss calculator
+- `artifacts/coin-management-tool/src/contexts/AuthContext.tsx` — auth state + Firestore profile
+- `artifacts/coin-management-tool/src/pages/` — all pages
+- `artifacts/coin-management-tool/src/components/` — Layout, ProtectedRoute, AdminRoute, ScreenshotUpload
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- **Firebase-only, no Express backend** — frontend talks directly to Firestore/Auth/Storage
+- **Dark mode forced** — :root and .dark have identical values; app is always dark
+- **Strategy engine is pure math** — `calculateDailyStrategy(coins, day, isRecovery)` returns targets
+- **Admin flag** — `isAdmin: true` on Firestore user doc unlocks /admin panel
+- **VITE_FIREBASE_APP_ID** — must be web app ID (not Android). Get from Firebase Console if missing
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Register/Login with Firebase Auth; forgot password via email
+- First login: set starting balance → begins 30-day strategy
+- Dashboard: daily strategy card (locked before 10 AM on day 2+), action buttons (Target Achieved / Stop Loss Hit)
+- Recovery mode: activates on stop loss, adjusts next-day targets gradually
+- 30-day timeline with color-coded day status
+- Analytics: growth chart, profit/loss bar chart, stats
+- Screenshot upload to Firebase Storage after each completed day
+- Admin panel: view/delete users, see screenshots, reset monthly plans
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Tool must be hosted on GitHub Pages + Firebase backend
+- Dark glassmorphism UI (blue + green accents)
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `VITE_FIREBASE_APP_ID` is currently missing (Android config was provided, not web). Add web app in Firebase Console.
+- Firebase Firestore rules must allow authenticated reads/writes in production
+- Screenshot upload requires Firebase Storage rules to allow authenticated users
 
 ## Pointers
 

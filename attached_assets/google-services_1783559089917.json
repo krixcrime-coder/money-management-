@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "662549484957",
+    "firebase_url": "https://tuni-653cf-default-rtdb.firebaseio.com",
+    "project_id": "tuni-653cf",
+    "storage_bucket": "tuni-653cf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662549484957:android:f67f99144b9a412c214b74",
+        "android_client_info": {
+          "package_name": "com.marco"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-UJxOT3zaGLot5PoU9MSAglbr31w4t84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
