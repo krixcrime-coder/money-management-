@@ -44,7 +44,7 @@ function Router() {
         <ProtectedRoute><Screenshots /></ProtectedRoute>
       </Route>
       
-      <Route path="/admin">
+      <Route path="/radhaji">
         <AdminRoute><Admin /></AdminRoute>
       </Route>
       

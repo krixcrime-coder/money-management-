@@ -17,7 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   ];
 
   if (userProfile?.isAdmin) {
-    navItems.push({ href: '/admin', label: 'Admin', icon: ShieldAlert });
+    navItems.push({ href: '/radhaji', label: 'Admin', icon: ShieldAlert });
   }
 
   const handleLogout = async () => {
