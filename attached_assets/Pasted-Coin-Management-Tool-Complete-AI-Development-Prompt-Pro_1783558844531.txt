@@ -1,0 +1,566 @@
+Coin Management Tool – Complete AI Development Prompt
+
+Project Name
+
+Coin Management Tool
+
+Purpose
+
+Build a web application that helps users manage their coins with discipline while playing a coin-based game.
+
+Important:
+This tool does not predict any game result, does not hack the game, does not analyze the game's algorithm, and does not guarantee profit.
+
+Its only purpose is to help users follow a daily money management strategy, record progress, manage targets, and maintain discipline.
+
+---
+
+About the Game
+
+The game works like this:
+
+- Every new user receives 100 coins after creating an account.
+- The goal is to reach 10,000 coins within one month (30 days).
+- Players can play anytime during the month.
+- There is no daily play limit.
+- The reward is given only if the player has 10,000 coins or more at the end of the month.
+- The game contains:
+  - Fast Button
+  - Slow/Second Button
+  - Random Result Chart
+
+Example:
+
+Player bets 10 coins on Fast.
+
+If Fast wins:
++10 coins
+
+If Fast loses:
+-10 coins
+
+The game result is completely random.
+
+The Coin Management Tool must NEVER claim that it knows or predicts future outcomes.
+
+---
+
+Purpose of This Tool
+
+This tool only helps users by:
+
+- Managing daily targets.
+- Managing daily stop-loss.
+- Preventing overplaying.
+- Recording progress.
+- Tracking recovery after losses.
+- Saving user history.
+- Unlocking new strategy each day.
+- Keeping users disciplined.
+
+---
+
+Core Rule
+
+The application must clearly display:
+
+«"This application does NOT predict game results. Every game outcome is random. This tool is only for coin management and discipline."»
+
+This warning should be visible on the dashboard.
+
+---
+
+Authentication
+
+Create a complete authentication system.
+
+Features:
+
+- Register
+- Login
+- Logout
+- Forgot Password
+- Email Verification (optional)
+
+Every user must have completely separate data.
+
+---
+
+User Profile
+
+Each account stores:
+
+- Name
+- Email
+- Join Date
+- Current Coins
+- Starting Coins
+- Current Day
+- Recovery Status
+- Screenshot History
+- Daily Progress
+- Monthly Progress
+
+---
+
+First Login Flow
+
+When a user logs in for the first time:
+
+Ask:
+
+Current Coins Available?
+
+Example:
+
+100
+
+or
+
+250
+
+or
+
+500
+
+The entered value becomes Starting Balance.
+
+After that the monthly strategy begins.
+
+---
+
+Dashboard
+
+Dashboard should display:
+
+Current Balance
+
+Current Day
+
+Today's Target
+
+Today's Maximum Loss
+
+Today's Status
+
+Recovery Status
+
+Month Progress
+
+Remaining Coins to 10,000
+
+Days Remaining
+
+Screenshot Status
+
+Unlock Time
+
+Warning Message
+
+---
+
+Daily Strategy
+
+Every day the tool generates:
+
+Starting Balance
+
+Today's Profit Target
+
+Today's Stop Loss
+
+Maximum Allowed Loss
+
+Target Balance
+
+Example
+
+Current Coins
+
+100
+
+Today's Target
+
+120
+
+Maximum Loss
+
+90
+
+Target Profit
+
+20
+
+Maximum Loss Allowed
+
+10
+
+---
+
+User Actions
+
+Only two buttons.
+
+Button 1
+
+Target Achieved
+
+Button 2
+
+Stop Loss Hit
+
+No other gameplay buttons.
+
+The tool never asks users to press Fast or Slow.
+
+---
+
+If Target Achieved
+
+Show:
+
+Congratulations
+
+Today's strategy completed.
+
+Please stop playing now.
+
+Do not continue today.
+
+Upload today's balance screenshot.
+
+Next strategy unlocks tomorrow after 10:00 AM.
+
+Update:
+
+Current Balance
+
+Current Day +1
+
+History
+
+Progress
+
+---
+
+If Stop Loss Hit
+
+Show:
+
+Stop playing immediately.
+
+Recovery mode activated.
+
+Upload today's screenshot.
+
+Tomorrow's strategy will adjust automatically.
+
+Current day should stay partially completed.
+
+Recovery status becomes Active.
+
+---
+
+Recovery System
+
+Recovery must be gradual.
+
+Never attempt to recover all losses in one day.
+
+Example
+
+Day 1
+
+100 → 90
+
+Day 2
+
+90 → 100
+
+Day 3
+
+100 → 115
+
+Day 4
+
+115 → 140
+
+Day 5
+
+140 → 170
+
+Recovery should happen slowly while still aiming for the monthly goal.
+
+---
+
+Day Colors
+
+Completed
+
+Green
+
+Current
+
+Blue
+
+Recovery
+
+Half Red
+Half Green
+
+Locked Future Days
+
+Gray
+
+---
+
+Monthly Timeline
+
+Display all 30 days.
+
+Example
+
+Day 1 ✅
+
+Day 2 ✅
+
+Day 3 🟢
+
+Day 4 🔒
+
+...
+
+Day 30 🔒
+
+---
+
+Unlock Rule
+
+Tomorrow's strategy becomes visible only after:
+
+10:00 AM local time.
+
+Before 10 AM show:
+
+Today's strategy is locked.
+
+Please come back after 10:00 AM.
+
+---
+
+Screenshot Upload
+
+After every completed day users upload:
+
+Balance Screenshot
+
+Store:
+
+Date
+
+Time
+
+Day Number
+
+Image
+
+Status
+
+---
+
+Progress Analytics
+
+Display:
+
+Starting Coins
+
+Current Coins
+
+Target Coins
+
+Remaining Coins
+
+Completed Days
+
+Recovery Days
+
+Success Days
+
+Loss Days
+
+Average Daily Growth
+
+Completion Percentage
+
+---
+
+Monthly Goal
+
+Goal:
+
+100 Coins
+
+↓
+
+10,000 Coins
+
+Within
+
+30 Days
+
+Progress bar should update automatically.
+
+---
+
+Strategy Engine
+
+The strategy engine should:
+
+Calculate today's target.
+
+Calculate today's stop-loss.
+
+Adjust after wins.
+
+Adjust after losses.
+
+Adjust recovery gradually.
+
+Recalculate remaining monthly target.
+
+Never generate impossible jumps.
+
+Never force high-risk recovery.
+
+---
+
+Data Storage
+
+Store:
+
+Authentication
+
+Coin History
+
+Daily Progress
+
+Recovery Status
+
+Monthly Progress
+
+Screenshots
+
+User Settings
+
+---
+
+Admin Panel
+
+Admin can:
+
+View users.
+
+Delete users.
+
+View uploaded screenshots.
+
+Reset monthly plans.
+
+View statistics.
+
+No access to passwords.
+
+---
+
+Notifications
+
+Notify users:
+
+Strategy unlocked.
+
+Screenshot pending.
+
+Recovery active.
+
+Target completed.
+
+Month completed.
+
+---
+
+Security
+
+Protected Routes
+
+Encrypted Authentication
+
+Cloud Database
+
+Input Validation
+
+No duplicate accounts
+
+No data leaks
+
+---
+
+UI Theme
+
+Modern Dark UI
+
+Blue + Green Accent
+
+Rounded Cards
+
+Responsive Design
+
+Mobile First
+
+Animated Progress Bars
+
+Smooth Page Transitions
+
+Glassmorphism Design
+
+---
+
+Technology Stack
+
+Frontend
+
+HTML
+
+CSS
+
+JavaScript
+
+React
+
+Backend
+
+Firebase Authentication
+
+Cloud Firestore
+
+Firebase Storage
+
+Hosting
+
+GitHub Pages (Frontend)
+
+Firebase (Backend)
+
+---
+
+Important Disclaimer
+
+The application must never:
+
+- Predict any game result.
+- Recommend which button (Fast/Slow) to choose.
+- Claim guaranteed profits.
+- Claim a fixed win rate.
+- Claim to know future outcomes.
+- Manipulate or interfere with the game.
+
+The tool exists only to help users manage their own coin balance, daily targets, stop-loss limits, recovery plans, and monthly progress in a disciplined manner.
