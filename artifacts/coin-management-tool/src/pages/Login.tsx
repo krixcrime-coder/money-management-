@@ -41,6 +41,9 @@ export default function Login() {
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">COINMGMT</h1>
           <p className="text-muted-foreground mt-2 text-center">Discipline over emotion.</p>
+          <Link href="/">
+            <span className="text-xs text-muted-foreground/50 hover:text-primary cursor-pointer mt-1">← Wapas Home</span>
+          </Link>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">

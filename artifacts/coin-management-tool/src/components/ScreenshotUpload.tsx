@@ -17,7 +17,9 @@ export function ScreenshotUpload({ dayNumber, onSuccess }: { dayNumber: number, 
     setUploading(true);
 
     try {
-      const storageRef = ref(storage, `screenshots/${user.uid}/${dayNumber}_${Date.now()}`);
+      // Organize: screenshots/{userId}/day_{dayNumber}/{timestamp}.{ext}
+      const ext = file.name.split('.').pop() || 'jpg';
+      const storageRef = ref(storage, `screenshots/${user.uid}/day_${dayNumber}/${Date.now()}.${ext}`);
       await uploadBytes(storageRef, file);
       const imageUrl = await getDownloadURL(storageRef);
 
