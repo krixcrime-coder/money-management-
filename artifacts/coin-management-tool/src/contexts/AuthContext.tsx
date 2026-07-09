@@ -18,9 +18,15 @@ export interface UserProfile {
   startingCoins: number;
   currentDay: number;
   recoveryStatus: boolean;
-  monthStartDate: Timestamp;
+  monthStartDate: Timestamp | null;
   isAdmin: boolean;
   setupComplete: boolean;
+  // Approval system
+  isApproved: boolean;
+  isRejected: boolean;
+  rejectionReason?: string;
+  gameUid?: string;
+  gameUidSubmittedAt?: Timestamp;
 }
 
 interface AuthContextType {

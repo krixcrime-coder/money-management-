@@ -222,6 +222,67 @@ service firebase.storage {
 
 ---
 
+## 🔒 PART 7 — Strict Security: Users Khud Ko Approve Nahi Kar Sakte
+
+**Yeh bahut zaroori hai!** Neeche wale Firestore rules se sirf admin hi `isApproved`, `isRejected`, `setupComplete`, `currentDay`, `monthStartDate` update kar sakta hai. Normal user sirf apna `gameUid` update kar sakta hai:
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admin check helper
+    function isAdmin() {
+      return request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+
+    // Fields sirf admin update kar sakta hai
+    function onlyNonPrivilegedFields() {
+      return !request.resource.data.diff(resource.data).affectedKeys()
+        .hasAny(['isApproved', 'isRejected', 'rejectionReason', 'setupComplete',
+                 'currentDay', 'currentCoins', 'startingCoins', 'monthStartDate',
+                 'recoveryStatus', 'isAdmin']);
+    }
+
+    match /users/{userId} {
+      // Padhna: khud ya admin
+      allow read: if request.auth != null &&
+        (request.auth.uid == userId || isAdmin());
+
+      // Create: sirf apna account banana (registration)
+      allow create: if request.auth != null && request.auth.uid == userId;
+
+      // Update: admin sab kuch update kar sakta hai;
+      //         normal user sirf gameUid aur non-privileged fields
+      allow update: if request.auth != null && (
+        isAdmin() ||
+        (request.auth.uid == userId && onlyNonPrivilegedFields())
+      );
+
+      // Delete: sirf admin
+      allow delete: if isAdmin();
+    }
+
+    match /users/{userId}/dailyProgress/{day} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /screenshots/{docId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && (
+        request.auth.uid == resource.data.userId || isAdmin()
+      );
+      allow delete: if isAdmin();
+    }
+  }
+}
+```
+
+> **Yeh rules Firebase Console → Firestore → Rules tab mein paste karo aur Publish karo!**
+
+---
+
 ## ✅ Quick Checklist
 
 - [ ] GitHub repo bana li

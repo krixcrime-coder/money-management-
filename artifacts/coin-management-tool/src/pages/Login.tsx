@@ -17,10 +17,10 @@ export default function Login() {
     setIsLoading(true);
     try {
       await login(email, password);
-      // Wait a tick for auth state to propagate and user profile to fetch
+      // ProtectedRoute will redirect to /pending if not approved, /dashboard if approved
       setTimeout(() => {
         setLocation('/dashboard');
-      }, 500);
+      }, 600);
     } catch (error: any) {
       toast.error('Login failed', {
         description: error.message || 'Please check your credentials and try again.',

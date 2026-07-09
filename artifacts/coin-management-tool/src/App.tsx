@@ -13,7 +13,7 @@ import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
-import Setup from './pages/Setup';
+import PendingApproval from './pages/PendingApproval';
 import Dashboard from './pages/Dashboard';
 import Timeline from './pages/Timeline';
 import Analytics from './pages/Analytics';
@@ -30,9 +30,7 @@ function Router() {
       <Route path="/register" component={Register} />
       <Route path="/forgot-password" component={ForgotPassword} />
       
-      <Route path="/setup">
-        <ProtectedRoute><Setup /></ProtectedRoute>
-      </Route>
+      <Route path="/pending" component={PendingApproval} />
       <Route path="/dashboard">
         <ProtectedRoute><Dashboard /></ProtectedRoute>
       </Route>

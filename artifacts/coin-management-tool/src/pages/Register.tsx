@@ -28,22 +28,26 @@ export default function Register() {
     try {
       const userCredential = await register(email, password);
       
-      // Create user profile
+      // Create user profile — 100 coins auto-set, awaits admin approval
       await setDoc(doc(db, 'users', userCredential.user.uid), {
         name,
         email,
         joinDate: serverTimestamp(),
-        currentCoins: 0,
-        startingCoins: 0,
+        currentCoins: 100,
+        startingCoins: 100,
         currentDay: 1,
         recoveryStatus: false,
-        monthStartDate: serverTimestamp(),
+        monthStartDate: null,
         isAdmin: false,
         setupComplete: false,
+        isApproved: false,
+        isRejected: false,
+        gameUid: '',
+        gameUidSubmittedAt: null,
       });
 
-      toast.success('Registration successful!');
-      setLocation('/setup');
+      toast.success('Account ban gaya! Ab neeche ke steps follow karo.');
+      setLocation('/pending');
     } catch (error: any) {
       toast.error('Registration failed', {
         description: error.message,
