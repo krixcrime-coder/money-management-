@@ -275,11 +275,18 @@ service cloud.firestore {
       );
       allow delete: if isAdmin();
     }
+
+    // App-wide settings (e.g. referral link) — anyone signed in can read,
+    // only admin can change them from the admin panel
+    match /settings/{docId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
   }
 }
 ```
 
-> **Yeh rules Firebase Console → Firestore → Rules tab mein paste karo aur Publish karo!**
+> **Yeh rules `firestore.rules` file mein already saved hain (repo root ke coin-management-tool folder mein). Isse copy karke Firebase Console → Firestore → Rules tab mein paste karo aur Publish karo! Storage ke liye `storage.rules` file use karo.**
 
 ---
 

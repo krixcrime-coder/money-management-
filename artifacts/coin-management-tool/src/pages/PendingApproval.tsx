@@ -1,53 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { getAppSettings } from '../lib/settings';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { useLocation } from 'wouter';
 
-const REFERRAL_LINK = import.meta.env.VITE_REFERRAL_LINK || 'https://your-game-link.com';
-
-const steps = [
-  {
-    num: '01',
-    icon: '🎮',
-    title: 'Game Mein Login Karo Hamari Link Se',
-    desc: 'Neeche di gayi link pe jaao aur game mein register/login karo. Isi link se account banana zaroori hai.',
-    action: (
-      <a
-        href={REFERRAL_LINK}
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 text-primary text-sm hover:bg-primary/20 transition-colors"
-      >
-        <span>🔗</span>
-        <span className="font-mono text-xs break-all">{REFERRAL_LINK}</span>
-      </a>
-    ),
-  },
-  {
-    num: '02',
-    icon: '💰',
-    title: 'Wallet Mein 100 Coins Add Karo',
-    desc: 'Game ke andar apni wallet mein 100 coins add karo. Yeh starting balance hai — iske baad strategy shuru hogi.',
-    action: null,
-  },
-  {
-    num: '03',
-    icon: '🆔',
-    title: 'Apna Game UID Bhejo',
-    desc: 'Game mein apna UID (User ID) dhundo aur neeche wale form mein enter karo. Admin verify karega aur access dega.',
-    action: null,
-  },
-];
+function buildSteps(referralLink: string) {
+  return [
+    {
+      num: '01',
+      icon: '🎮',
+      title: 'Log Into the Game Using Our Link',
+      desc: 'Open the link below and register or log in to the game. Creating your account through this link is required.',
+      action: (
+        <a
+          href={referralLink}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 text-primary text-sm hover:bg-primary/20 transition-colors"
+        >
+          <span>🔗</span>
+          <span className="font-mono text-xs break-all">{referralLink}</span>
+        </a>
+      ),
+    },
+    {
+      num: '02',
+      icon: '💰',
+      title: 'Add 100 Coins to Your Wallet',
+      desc: 'Add 100 coins to your in-game wallet. This is your starting balance — your strategy begins after this.',
+      action: null,
+    },
+    {
+      num: '03',
+      icon: '🆔',
+      title: 'Submit Your Game UID',
+      desc: 'Find your UID (User ID) in the game and enter it in the form below. An admin will verify it and grant access.',
+      action: null,
+    },
+  ];
+}
 
 export default function PendingApproval() {
   const { user, userProfile, refreshProfile, logout } = useAuth();
   const [gameUid, setGameUid] = useState(userProfile?.gameUid || '');
   const [submitting, setSubmitting] = useState(false);
+  const [referralLink, setReferralLink] = useState('https://your-game-link.com');
   const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    getAppSettings().then((s) => setReferralLink(s.referralLink));
+  }, []);
+
+  const steps = buildSteps(referralLink);
 
   // Guard: unauthenticated users → /login
   if (!user) {
@@ -75,9 +83,9 @@ export default function PendingApproval() {
         isRejected: false,
       });
       await refreshProfile();
-      toast.success('UID submit ho gayi! Admin jald verify karega.');
+      toast.success('UID submitted! An admin will verify it soon.');
     } catch (err) {
-      toast.error('Submit nahi hua. Dobara try karo.');
+      toast.error('Submission failed. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -114,32 +122,32 @@ export default function PendingApproval() {
             <div className="w-16 h-16 rounded-full bg-destructive/20 flex items-center justify-center mx-auto mb-5">
               <span className="text-3xl">❌</span>
             </div>
-            <h1 className="text-2xl font-bold text-destructive mb-3">Access Reject Hua</h1>
+            <h1 className="text-2xl font-bold text-destructive mb-3">Access Rejected</h1>
             <p className="text-muted-foreground mb-2 leading-relaxed">
-              {userProfile?.rejectionReason || 'Aapne hamare referral link se game mein register nahi kiya.'}
+              {userProfile?.rejectionReason || 'You did not register in the game through our referral link.'}
             </p>
             <p className="text-muted-foreground text-sm mb-6">
-              Pehle neeche di gayi link se game mein register karo, phir dobara UID submit karo.
+              Register in the game using the link below, then submit your UID again.
             </p>
             <a
-              href={REFERRAL_LINK}
+              href={referralLink}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white font-medium text-sm hover:bg-primary/90 transition-colors mb-6"
             >
-              🔗 Referral Link Pe Jao
+              🔗 Go to Referral Link
             </a>
             <div className="pt-4 border-t border-white/10">
-              <p className="text-sm text-muted-foreground mb-3">Register karne ke baad apna naya UID bhejo:</p>
+              <p className="text-sm text-muted-foreground mb-3">After registering, submit your new UID:</p>
               <form onSubmit={handleSubmitUid} className="flex gap-3">
                 <Input
                   value={gameUid}
                   onChange={e => setGameUid(e.target.value)}
-                  placeholder="Naya Game UID"
+                  placeholder="New Game UID"
                   className="bg-black/20 border-white/10 flex-1"
                 />
                 <Button type="submit" disabled={submitting || !gameUid.trim()}>
-                  {submitting ? '...' : 'Bhejo'}
+                  {submitting ? '...' : 'Submit'}
                 </Button>
               </form>
             </div>
@@ -150,22 +158,22 @@ export default function PendingApproval() {
             <div className="w-16 h-16 rounded-full bg-yellow-500/20 flex items-center justify-center mx-auto mb-5">
               <span className="text-3xl">⏳</span>
             </div>
-            <h1 className="text-2xl font-bold text-foreground mb-3">Review Mein Hai</h1>
+            <h1 className="text-2xl font-bold text-foreground mb-3">Under Review</h1>
             <p className="text-muted-foreground mb-4 leading-relaxed">
-              Aapki request admin ke paas gayi hai. Jab approve ho jayega, aapka dashboard unlock ho jayega aur strategy shuru ho jayegi.
+              Your request has been sent to the admin. Once approved, your dashboard will unlock and your strategy will begin.
             </p>
             <div className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 mb-6">
               <span className="text-yellow-400 text-sm font-mono">Game UID:</span>
               <span className="text-yellow-300 font-bold font-mono">{userProfile?.gameUid}</span>
             </div>
             <p className="text-xs text-muted-foreground mb-6">
-              Galat UID diya? Neeche correct karo:
+              Submitted the wrong UID? Correct it below:
             </p>
             <form onSubmit={handleSubmitUid} className="flex gap-3">
               <Input
                 value={gameUid}
                 onChange={e => setGameUid(e.target.value)}
-                placeholder="Sahi Game UID"
+                placeholder="Correct Game UID"
                 className="bg-black/20 border-white/10 flex-1"
               />
               <Button type="submit" variant="outline" disabled={submitting || !gameUid.trim() || gameUid.trim() === userProfile?.gameUid}>
@@ -173,7 +181,7 @@ export default function PendingApproval() {
               </Button>
             </form>
             <div className="mt-8 flex justify-center">
-              <Button variant="ghost" size="sm" className="text-muted-foreground text-xs gap-2" onClick={async () => { await refreshProfile(); toast.info('Status refresh ho gayi'); }}>
+              <Button variant="ghost" size="sm" className="text-muted-foreground text-xs gap-2" onClick={async () => { await refreshProfile(); toast.info('Status refreshed'); }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
                 Refresh Status
               </Button>
@@ -191,7 +199,7 @@ export default function PendingApproval() {
                 Welcome, {userProfile?.name?.split(' ')[0]}! 👋
               </h1>
               <p className="text-muted-foreground leading-relaxed">
-                Strategy shuru karne se pehle neeche ke <strong className="text-foreground">3 steps</strong> complete karo aur apna Game UID bhejo. Admin verify karega.
+                Before your strategy begins, complete the <strong className="text-foreground">3 steps</strong> below and submit your Game UID. An admin will verify it.
               </p>
             </div>
 
@@ -214,9 +222,9 @@ export default function PendingApproval() {
 
             {/* UID Submit Form */}
             <div className="glass-card p-6 border border-primary/20">
-              <h3 className="font-semibold text-foreground mb-1">Apna Game UID Bhejo</h3>
+              <h3 className="font-semibold text-foreground mb-1">Submit Your Game UID</h3>
               <p className="text-muted-foreground text-sm mb-4">
-                Game ke Profile → Settings mein UID milti hai (usually numbers ka combination).
+                You'll find your UID under Profile → Settings in the game (usually a series of numbers).
               </p>
               <form onSubmit={handleSubmitUid} className="space-y-3">
                 <Input
@@ -227,14 +235,14 @@ export default function PendingApproval() {
                   required
                 />
                 <Button type="submit" className="w-full h-12" disabled={submitting || !gameUid.trim()}>
-                  {submitting ? 'Bhej rahe hain...' : '🚀 UID Submit Karo & Approval Maango'}
+                  {submitting ? 'Submitting...' : '🚀 Submit UID & Request Approval'}
                 </Button>
               </form>
             </div>
 
             <div className="mt-6 p-4 rounded-xl border border-yellow-500/20 bg-yellow-500/5">
               <p className="text-yellow-300/80 text-xs leading-relaxed">
-                ⚠️ <strong>Zaroori:</strong> Sirf woh accounts approve honge jinke game UID valid honge aur jinhone hamare referral link se join kiya ho. Fake UID ya link se register na karne par account reject hoga.
+                ⚠️ <strong>Important:</strong> Only accounts with a valid game UID that joined through our referral link will be approved. Fake UIDs or registering without the link will result in rejection.
               </p>
             </div>
           </>

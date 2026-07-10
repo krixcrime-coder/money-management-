@@ -10,7 +10,7 @@ const features = [
       </svg>
     ),
     title: 'Smart Daily Strategy',
-    desc: 'Har din ka target aur stop-loss automatically calculate hota hai. 10% se 22% tak dynamic growth rate based on aapke coins.',
+    desc: 'Your daily target and stop-loss are calculated automatically, with a dynamic growth rate from 10% to 22% based on your coin balance.',
   },
   {
     icon: (
@@ -19,7 +19,7 @@ const features = [
       </svg>
     ),
     title: '30-Day Timeline',
-    desc: 'Poore mahine ka color-coded calendar. Har din ka status ek nazar mein — green (win), red (loss), blue (pending), yellow (recovery).',
+    desc: 'A color-coded calendar for the whole month. See every day\'s status at a glance — green (win), red (loss), blue (pending), yellow (recovery).',
   },
   {
     icon: (
@@ -28,7 +28,7 @@ const features = [
       </svg>
     ),
     title: 'Analytics & Charts',
-    desc: 'Growth curve, profit/loss bar chart, win rate — sab kuch visual. Samjho kahan galti ho rahi hai aur kahan improvement hai.',
+    desc: 'Growth curve, profit/loss bar chart, win rate — all visualized. Understand where you\'re going wrong and where you\'re improving.',
   },
   {
     icon: (
@@ -37,7 +37,7 @@ const features = [
       </svg>
     ),
     title: 'Screenshot Proof',
-    desc: 'Har din ka balance screenshot apne folder mein save hoga. Transparency aur accountability ke liye — koi cheat nahi.',
+    desc: 'Every day\'s balance screenshot is saved to your folder — for transparency and accountability, with no room to cheat.',
   },
   {
     icon: (
@@ -46,7 +46,7 @@ const features = [
       </svg>
     ),
     title: 'Recovery Mode',
-    desc: 'Stop-loss hit hone par automatic recovery mode activate. Targets adjust ho jaate hain gradually wapas track pe aane ke liye.',
+    desc: 'Automatically activates when your stop-loss is hit. Targets gradually adjust to bring you back on track.',
   },
   {
     icon: (
@@ -55,14 +55,14 @@ const features = [
       </svg>
     ),
     title: '10 AM Lock System',
-    desc: 'Day 2 se aage subah 10 baje se pehle koi action nahi. Impulsive decisions se protection — discipline ka asli test.',
+    desc: 'From Day 2 onward, no action is allowed before 10:00 AM. Protection against impulsive decisions — the real test of discipline.',
   },
 ];
 
 const steps = [
-  { num: '01', title: 'Register Karen', desc: 'Email se account banao aur apna starting balance enter karo.' },
-  { num: '02', title: 'Strategy Follow Karen', desc: 'Har din dashboard kholo — target aur stop-loss already calculated milenge.' },
-  { num: '03', title: 'Screenshot Upload Karen', desc: 'Din khatam hone par balance screenshot upload karo aur next day unlock karo.' },
+  { num: '01', title: 'Register', desc: 'Create an account with your email — your starting balance is set automatically.' },
+  { num: '02', title: 'Follow the Strategy', desc: 'Open your dashboard every day — your target and stop-loss are already calculated.' },
+  { num: '03', title: 'Upload a Screenshot', desc: 'Upload a balance screenshot at the end of the day to unlock the next day.' },
 ];
 
 export default function LandingPage() {
@@ -126,7 +126,7 @@ export default function LandingPage() {
 
         {/* Heading */}
         <h1 className="relative z-10 text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 leading-none">
-          <span className="text-foreground">Coin Game ki</span>
+          <span className="text-foreground">The Coin Game</span>
           <br />
           <span className="bg-gradient-to-r from-primary via-blue-400 to-secondary bg-clip-text text-transparent">
             Discipline App
@@ -135,22 +135,22 @@ export default function LandingPage() {
 
         {/* Subheading */}
         <p className="relative z-10 text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
-          Emotion nahi, <strong className="text-foreground">strategy</strong> chalayegi.
-          Har din ka target, stop-loss, aur recovery plan — sab ek jagah.
+          Not emotion — <strong className="text-foreground">strategy</strong> drives the decisions.
+          Daily targets, stop-loss, and a recovery plan — all in one place.
           <br />
-          Coin game jeetna hai toh discipline seekhni hogi.
+          Winning the coin game means learning discipline.
         </p>
 
         {/* CTAs */}
         <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 mb-16">
           <Link href="/register">
             <Button size="lg" className="px-8 h-14 text-base bg-primary hover:bg-primary/90 shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:shadow-[0_0_50px_rgba(59,130,246,0.6)] transition-all duration-300">
-              🚀 Abhi Shuru Karen
+              🚀 Get Started Now
             </Button>
           </Link>
           <Link href="/login">
             <Button size="lg" variant="outline" className="px-8 h-14 text-base border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur">
-              Account Hai? Login Karen →
+              Have an Account? Log In →
             </Button>
           </Link>
         </div>
@@ -158,7 +158,7 @@ export default function LandingPage() {
         {/* Stats */}
         <div className="relative z-10 grid grid-cols-3 gap-6 max-w-lg w-full">
           {[
-            { val: '30', label: 'Din Ka Plan' },
+            { val: '30', label: 'Day Plan' },
             { val: '100×', label: 'Growth Target' },
             { val: '0%', label: 'Guesswork' },
           ].map((s) => (
@@ -171,7 +171,7 @@ export default function LandingPage() {
 
         {/* Scroll hint */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground/50 text-xs animate-bounce">
-          <span>Neeche dekhein</span>
+          <span>Scroll down</span>
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
       </section>
@@ -181,8 +181,8 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto flex items-start gap-3 p-4 rounded-xl border border-yellow-500/30 bg-yellow-500/5">
           <span className="text-yellow-400 text-xl mt-0.5">⚠️</span>
           <p className="text-yellow-300/80 text-sm leading-relaxed">
-            <strong className="text-yellow-300">Disclaimer:</strong> Yeh app coin game results predict <strong>nahi</strong> karti. Har game outcome random hota hai.
-            Yeh sirf coin management aur discipline ke liye ek tool hai. Responsible khelo.
+            <strong className="text-yellow-300">Disclaimer:</strong> This app does <strong>not</strong> predict coin game results. Every game outcome is random.
+            It is only a tool for coin management and discipline. Play responsibly.
           </p>
         </div>
       </section>
@@ -191,10 +191,10 @@ export default function LandingPage() {
       <section className="px-4 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">Kya Karta Hai Yeh Tool</p>
-            <h2 className="text-4xl font-bold tracking-tight">Sab kuch ek jagah</h2>
+            <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">What This Tool Does</p>
+            <h2 className="text-4xl font-bold tracking-tight">Everything in one place</h2>
             <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              Har cheez jo aapko discipline ke saath khelte rehne ke liye chahiye — strategy se lekar analytics tak.
+              Everything you need to keep playing with discipline — from strategy to analytics.
             </p>
           </div>
 
@@ -223,7 +223,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <p className="text-secondary text-sm font-semibold tracking-widest uppercase mb-3">Simple 3 Steps</p>
-            <h2 className="text-4xl font-bold tracking-tight">Kaise Kaam Karta Hai</h2>
+            <h2 className="text-4xl font-bold tracking-tight">How It Works</h2>
           </div>
 
           <div className="flex flex-col gap-6">
@@ -250,9 +250,9 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto glass-card p-8 md:p-12 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 pointer-events-none" />
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-4">Math Samjho</h2>
+            <h2 className="text-3xl font-bold mb-4">Understand the Math</h2>
             <p className="text-muted-foreground mb-8">
-              Agar aap har din sirf <strong className="text-foreground">15%</strong> grow karo, toh:
+              If you grow just <strong className="text-foreground">15%</strong> every day, here's what happens:
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {[
@@ -269,7 +269,7 @@ export default function LandingPage() {
               ))}
             </div>
             <p className="text-muted-foreground text-sm">
-              Lekin yeh tabhi kaam karta hai jab aap <strong className="text-foreground">har din strategy follow karo</strong> aur stop-loss hit hone par ruk jao.
+              But this only works if you <strong className="text-foreground">follow the strategy every day</strong> and stop as soon as your stop-loss is hit.
             </p>
           </div>
         </div>
@@ -279,23 +279,23 @@ export default function LandingPage() {
       <section className="px-4 py-24 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-            Shuru Karo{' '}
+            Start{' '}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Aaj Se
+              Today
             </span>
           </h2>
           <p className="text-muted-foreground text-lg mb-10">
-            Registration free hai. Bas email, password, aur starting balance chahiye.
+            Registration is free. Just an email, password, and starting balance.
           </p>
           <Link href="/register">
             <Button size="lg" className="px-12 h-14 text-lg bg-primary hover:bg-primary/90 shadow-[0_0_40px_rgba(59,130,246,0.4)]">
-              Free Account Banao
+              Create Free Account
             </Button>
           </Link>
           <div className="mt-6 text-sm text-muted-foreground">
-            Pehle se account hai?{' '}
+            Already have an account?{' '}
             <Link href="/login">
-              <span className="text-primary hover:underline cursor-pointer">Login karen →</span>
+              <span className="text-primary hover:underline cursor-pointer">Log in →</span>
             </Link>
           </div>
         </div>
@@ -311,10 +311,10 @@ export default function LandingPage() {
             <span className="text-sm font-semibold tracking-widest">COINMGMT</span>
           </div>
           <p className="text-xs text-muted-foreground/50 text-center">
-            ⚠️ Yeh app game results predict nahi karti. Sirf discipline tool hai. Responsibly khelo.
+            ⚠️ This app does not predict game results. It is a discipline tool only. Play responsibly.
           </p>
           <div className="flex gap-4 text-xs text-muted-foreground">
-            <Link href="/login"><span className="hover:text-foreground cursor-pointer">Login</span></Link>
+            <Link href="/login"><span className="hover:text-foreground cursor-pointer">Log In</span></Link>
             <Link href="/register"><span className="hover:text-foreground cursor-pointer">Register</span></Link>
           </div>
         </div>

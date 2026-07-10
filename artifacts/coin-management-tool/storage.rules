@@ -1,0 +1,13 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // screenshots/{userId}/day_{day}/{file} — only the owner can upload
+    match /screenshots/{userId}/{allPaths=**} {
+      allow read: if request.auth != null && (
+        request.auth.uid == userId ||
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin == true
+      );
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

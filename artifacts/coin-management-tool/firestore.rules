@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admin check helper
+    function isAdmin() {
+      return request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+
+    // Fields only an admin is allowed to change
+    function onlyNonPrivilegedFields() {
+      return !request.resource.data.diff(resource.data).affectedKeys()
+        .hasAny(['isApproved', 'isRejected', 'rejectionReason', 'setupComplete',
+                 'currentDay', 'currentCoins', 'startingCoins', 'monthStartDate',
+                 'recoveryStatus', 'isAdmin']);
+    }
+
+    match /users/{userId} {
+      // Read: yourself or an admin
+      allow read: if request.auth != null &&
+        (request.auth.uid == userId || isAdmin());
+
+      // Create: only your own account (registration)
+      allow create: if request.auth != null && request.auth.uid == userId;
+
+      // Update: admin can change anything;
+      //         a normal user can only change gameUid and other non-privileged fields
+      allow update: if request.auth != null && (
+        isAdmin() ||
+        (request.auth.uid == userId && onlyNonPrivilegedFields())
+      );
+
+      // Delete: admin only
+      allow delete: if isAdmin();
+    }
+
+    match /users/{userId}/dailyProgress/{day} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /screenshots/{docId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null && (
+        request.auth.uid == resource.data.userId || isAdmin()
+      );
+      allow delete: if isAdmin();
+    }
+
+    // App-wide settings (e.g. referral link) — any signed-in user can read,
+    // only an admin can change them from the admin panel
+    match /settings/{docId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+  }
+}

@@ -21,7 +21,7 @@ export function AdminRoute({ children }: { children: React.ReactNode }) {
       sessionStorage.setItem(SESSION_KEY, 'yes');
       setAuthed(true);
     } else {
-      setError('Username ya password galat hai');
+      setError('Incorrect username or password');
       setShake(true);
       setTimeout(() => setShake(false), 500);
     }

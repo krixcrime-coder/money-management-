@@ -28,11 +28,11 @@ export default function Register() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Passwords match nahi karte');
+      toast.error('Passwords do not match');
       return;
     }
     if (password.length < 6) {
-      toast.error('Password kam se kam 6 characters ka hona chahiye');
+      toast.error('Password must be at least 6 characters');
       return;
     }
 
@@ -60,13 +60,13 @@ export default function Register() {
         gameUidSubmittedAt: null,
       });
 
-      toast.success(`Account ban gaya! Username: ${autoName}`);
+      toast.success(`Account created! Username: ${autoName}`);
       setLocation('/pending');
     } catch (error: any) {
       const msg = error.code === 'auth/email-already-in-use'
-        ? 'Yeh email pehle se registered hai'
+        ? 'This email is already registered'
         : error.message;
-      toast.error('Registration fail hui', { description: msg });
+      toast.error('Registration failed', { description: msg });
       setIsLoading(false);
     }
   };
@@ -83,7 +83,7 @@ export default function Register() {
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">Create Account</h1>
           <p className="text-muted-foreground mt-1 text-sm text-center">
-            Email se register karo — username automatic banega
+            Register with your email — your username is generated automatically
           </p>
         </div>
 
@@ -118,7 +118,7 @@ export default function Register() {
           {/* Auto-username preview */}
           {email.includes('@') && (
             <div className="px-3 py-2 rounded-lg bg-primary/5 border border-primary/10 text-xs text-muted-foreground">
-              👤 Aapka username hoga:{' '}
+              👤 Your username will be:{' '}
               <span className="text-primary font-mono font-semibold">
                 {generateUsername(email)}
               </span>
@@ -126,20 +126,20 @@ export default function Register() {
           )}
 
           <Button type="submit" className="w-full h-12 text-md mt-2" disabled={isLoading}>
-            {isLoading ? 'Account ban raha hai...' : 'Register Karen'}
+            {isLoading ? 'Creating account...' : 'Register'}
           </Button>
         </form>
 
         <div className="mt-6 text-center text-sm text-muted-foreground">
-          Pehle se account hai?{' '}
+          Already have an account?{' '}
           <Link href="/login">
-            <span className="text-primary hover:underline cursor-pointer font-medium">Login karen</span>
+            <span className="text-primary hover:underline cursor-pointer font-medium">Log in</span>
           </Link>
         </div>
       </div>
 
       <div className="mt-8 text-center max-w-xs text-xs text-muted-foreground/50 px-4">
-        ⚠️ Yeh app game results predict nahi karti. Sirf discipline tool hai.
+        ⚠️ This app does not predict game results. It is a discipline tool only.
       </div>
     </div>
   );

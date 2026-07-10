@@ -188,27 +188,25 @@ export default function Dashboard() {
             )}
           </div>
           
-          <div className={`p-6 md:p-8 grid grid-cols-2 gap-8 relative ${isLocked && dailyStatus === 'pending' ? 'opacity-30 blur-[2px] pointer-events-none' : ''} transition-all duration-500`}>
-            <div className="space-y-1">
-              <div className="text-sm text-secondary font-medium">Target Balance</div>
-              <div className="text-3xl font-bold text-foreground">{strategy.targetBalance.toLocaleString()}</div>
-              <div className="text-xs text-muted-foreground">+{strategy.targetProfit.toLocaleString()} coins ({(strategy.growthRate * 100).toFixed(1)}%)</div>
+          {isLocked && dailyStatus === 'pending' ? (
+            <div className="p-10 md:p-14 flex flex-col items-center justify-center text-center">
+              <span className="text-4xl mb-3">🔒</span>
+              <p className="font-semibold text-foreground">Strategy Locked</p>
+              <p className="text-sm text-muted-foreground max-w-[240px] mt-1">
+                Today's targets will reveal after 10:00 AM local time.
+              </p>
             </div>
-            <div className="space-y-1">
-              <div className="text-sm text-destructive font-medium">Stop Loss</div>
-              <div className="text-3xl font-bold text-foreground">{strategy.stopLossBalance.toLocaleString()}</div>
-              <div className="text-xs text-muted-foreground">-{strategy.maxLoss.toLocaleString()} coins max loss</div>
-            </div>
-          </div>
-
-          {isLocked && dailyStatus === 'pending' && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center mt-20">
-              <div className="bg-background/90 backdrop-blur-md border border-white/10 px-6 py-4 rounded-xl shadow-2xl flex flex-col items-center">
-                <span className="text-4xl mb-2">🔒</span>
-                <p className="font-semibold text-foreground">Strategy Locked</p>
-                <p className="text-sm text-muted-foreground text-center max-w-[200px] mt-1">
-                  Today's targets will reveal after 10:00 AM local time.
-                </p>
+          ) : (
+            <div className="p-6 md:p-8 grid grid-cols-2 gap-8 transition-all duration-500">
+              <div className="space-y-1">
+                <div className="text-sm text-secondary font-medium">Target Balance</div>
+                <div className="text-3xl font-bold text-foreground">{strategy.targetBalance.toLocaleString()}</div>
+                <div className="text-xs text-muted-foreground">+{strategy.targetProfit.toLocaleString()} coins ({(strategy.growthRate * 100).toFixed(1)}%)</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-sm text-destructive font-medium">Stop Loss</div>
+                <div className="text-3xl font-bold text-foreground">{strategy.stopLossBalance.toLocaleString()}</div>
+                <div className="text-xs text-muted-foreground">-{strategy.maxLoss.toLocaleString()} coins max loss</div>
               </div>
             </div>
           )}
